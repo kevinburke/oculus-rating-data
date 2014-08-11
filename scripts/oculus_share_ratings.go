@@ -10,9 +10,10 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+
+	"github.com/kevinburke/oculus-rating-data"
 )
 
-const FORCE_DOWNLOAD = false
 const CACHEDIR = "cache"
 
 type ComfortLevel uint8
@@ -42,7 +43,7 @@ func checkError(err error) {
 }
 
 func getAppData(filename string) ShareApp {
-	bits, err := ioutil.ReadFile(filepath.Join("tmp", filename))
+	bits, err := ioutil.ReadFile(filepath.Join(CACHEDIR, filename))
 	checkError(err)
 	var sa ShareApp
 	err = json.Unmarshal(bits, &sa)
@@ -52,7 +53,7 @@ func getAppData(filename string) ShareApp {
 
 // load oculus share data from the tmp folder.
 func getAppsData() []ShareApp {
-	f, err := os.Open("tmp")
+	f, err := os.Open(CACHEDIR)
 	checkError(err)
 	defer f.Close()
 	names, err := f.Readdirnames(-1)
@@ -208,6 +209,8 @@ func computeSlopeYIntercept(frro *FRAppRatingOutput) (float64, float64) {
 }
 
 func main() {
+	oculus_rating_data.FetchEverything(false)
+
 	sas := getAppsData()
 	//rs := getCSVData()
 	frro := getComfortLevelRatingData(sas)
