@@ -19,8 +19,8 @@ type ShareApp struct {
 	Downloads    uint32 `json:"fileDownloadsOculus"`
 }
 
-func getAppData(filename string) ShareApp {
-	bits, err := ioutil.ReadFile(filepath.Join(CACHEDIR, filename))
+func getAppData(directory string, filename string) ShareApp {
+	bits, err := ioutil.ReadFile(filepath.Join(directory, filename))
 	checkError(err)
 	var sa ShareApp
 	err = json.Unmarshal(bits, &sa)
@@ -41,7 +41,7 @@ func GetAppsData(directory string) []ShareApp {
 		if !strings.HasSuffix(file, ".json") {
 			continue
 		}
-		sa := getAppData(file)
+		sa := getAppData(directory, file)
 		//fmt.Printf("%s, %d, %d, %d, %d, %d\n", sa.Name, sa.UserRating, sa.Ratings, sa.Comfort, sa.ComfortVotes, sa.Downloads)
 		sas = append(sas, sa)
 	}

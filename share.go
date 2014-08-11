@@ -113,11 +113,11 @@ func cachePage(path string, directory string, id string, wg *sync.WaitGroup, for
 // downloads all ratings and stores them in the cache directory as json
 // files takes about 12 seconds to run. please do not run this with
 // forceDownload=true, just use the cache
-func FetchEverything(forceDownload bool) {
+func FetchEverything(forceDownload bool, directory string) {
 	wg := &sync.WaitGroup{}
 	wg.Add(1)
-	cachePage("/category/all", CACHEDIR, "share_homepage.html", wg, forceDownload)
-	f, err := os.Open(filepath.Join(CACHEDIR, "share_homepage.html"))
+	cachePage("/category/all", directory, "share_homepage.html", wg, forceDownload)
+	f, err := os.Open(filepath.Join(directory, "share_homepage.html"))
 	checkError(err)
 	doc, err := html.Parse(f)
 	checkError(err)
@@ -125,7 +125,7 @@ func FetchEverything(forceDownload bool) {
 	for _, link := range links {
 		id := getAppId(link)
 		wg.Add(1)
-		go cachePage(link, CACHEDIR, id+".json", wg, forceDownload)
+		go cachePage(link, directory, id+".json", wg, forceDownload)
 	}
 	wg.Wait()
 }
