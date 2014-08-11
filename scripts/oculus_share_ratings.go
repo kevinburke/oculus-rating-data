@@ -13,6 +13,7 @@ import (
 )
 
 const FORCE_DOWNLOAD = false
+const CACHEDIR = "cache"
 
 type ComfortLevel uint8
 
