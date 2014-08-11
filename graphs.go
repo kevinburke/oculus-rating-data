@@ -50,8 +50,7 @@ func GetFRShareRatingData(sas []ShareApp, records [][]string) (*FRAppRatingOutpu
 					return &FRAppRatingOutput{}, err
 				}
 				if framerate > 200 {
-					fmt.Println("skipping ", sas[j].Name, "due to framerate", framerate)
-					break
+					framerate = 200
 				}
 				dp := []float32{float32(framerate), quot}
 				frro.Data = append(frro.Data, dp)
@@ -69,7 +68,7 @@ func GetFRShareRatingData(sas []ShareApp, records [][]string) (*FRAppRatingOutpu
 func GetRatingDownloadData(sas []ShareApp) *FRAppRatingOutput {
 	frro := new(FRAppRatingOutput)
 	for j := 0; j < len(sas); j++ {
-		if sas[j].Ratings <= 5 {
+		if sas[j].Ratings <= 5 || sas[j].Downloads <= 5 {
 			continue
 		}
 		quot := float32(sas[j].UserRating) / float32(sas[j].Ratings)
@@ -90,6 +89,20 @@ func GetComfortLevelRatingData(sas []ShareApp) *FRAppRatingOutput {
 		quot2 := float32(sas[j].Comfort) / float32(sas[j].ComfortVotes)
 		frro.Names = append(frro.Names, sas[j].Name)
 		dp := []float32{quot2, quot}
+		frro.Data = append(frro.Data, dp)
+	}
+	return frro
+}
+
+func GetComfortLevelDownloadData(sas []ShareApp) *FRAppRatingOutput {
+	frro := new(FRAppRatingOutput)
+	for j := 0; j < len(sas); j++ {
+		if sas[j].ComfortVotes <= 5 {
+			continue
+		}
+		quot2 := float32(sas[j].Comfort) / float32(sas[j].ComfortVotes)
+		frro.Names = append(frro.Names, sas[j].Name)
+		dp := []float32{quot2, float32(sas[j].Downloads)}
 		frro.Data = append(frro.Data, dp)
 	}
 	return frro
