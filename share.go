@@ -100,7 +100,7 @@ func _cachePage(path string, fn string) {
 func cachePage(path string, directory string, id string, wg *sync.WaitGroup, forceDownload bool) {
 	defer wg.Done()
 	fn := filepath.Join(directory, id)
-	if FORCE_DOWNLOAD {
+	if forceDownload {
 		_cachePage(path, fn)
 	}
 	// logic here is a little unwieldy, fuck
