@@ -215,8 +215,7 @@ func main() {
 	//rs := getCSVData()
 	frro := getComfortLevelRatingData(sas)
 	frro.Slope, frro.YIntercept = computeSlopeYIntercept(frro)
-	fn := filepath.Join("static", "data", "correlation-framerate",
-		"comfort_rating.json")
+	fn := filepath.Join("graphs", "comfort_rating.json")
 	err := dumpFRROToFile(frro, fn)
 	checkError(err)
 	fmt.Println("slope: ", frro.Slope)
