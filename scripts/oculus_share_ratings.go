@@ -30,7 +30,7 @@ func main() {
 	oculus_rating_data.FetchEverything(false)
 
 	sas := oculus_rating_data.GetAppsData("cache")
-	//rs := getCSVData()
+	//rs := oculus_rating_data.GetCSVData("csv/dk2_fps_names")
 	frro := oculus_rating_data.GetComfortLevelRatingData(sas)
 	frro.Slope, frro.YIntercept = oculus_rating_data.ComputeSlopeYIntercept(frro)
 	fn := filepath.Join("graphs", "comfort_rating.json")
