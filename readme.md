@@ -7,7 +7,8 @@ things you can do with this:
 - import eVRydayVR's data from the attached CSV
 
 - generate JSON which you can use to make pretty charts with flot (see
-[twentymilliseconds.com][www] for examples)
+[twentymilliseconds.com](https://www.twentymilliseconds.com/post/correlation-frame-rate-rating){:target="_blank"} for examples)
+<a href="https://www.twentymilliseconds.com/post/correlation-frame-rate-rating" target="_blank">twentymilliseconds.com</a>
 
 There are some docs on [godoc][godoc].
 
